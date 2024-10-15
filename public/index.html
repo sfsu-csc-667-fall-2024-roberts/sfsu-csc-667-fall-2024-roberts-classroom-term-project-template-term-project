@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monopoly Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .transition-transform {
+      transition: transform 0.3s ease-in-out;
+    }
+    .selected {
+      background-color: #3b82f6; /* Tailwind blue-500 */
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="min-h-screen bg-gray-100 flex flex-col">
+    <header class="bg-green-600 p-4 text-white text-center font-bold text-3xl">
+      Monopoly Game
+    </header>
+
+    <main class="flex flex-grow">
+      <div id="setup-screen" class="block w-full">
+        <h2 class="text-center text-2xl mt-4">Choose Your Token</h2>
+        <div class="flex justify-center mt-4">
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Top Hat">Top Hat</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Race Car">Race Car</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Scottie Dog">Scottie Dog</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Cat">Cat</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Penguin">Penguin</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Rubber Ducky">Rubber Ducky</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="T-Rex">T-Rex</button>
+          <button class="token-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-token="Wheelbarrow">Wheelbarrow</button>
+        </div>
+        
+        <h2 class="text-center text-2xl mt-4">Number of Bots</h2>
+        <div class="flex justify-center mt-4">
+          <button class="bot-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-bot="1">1</button>
+          <button class="bot-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-bot="2">2</button>
+          <button class="bot-btn bg-gray-200 hover:bg-gray-300 active:bg-gray-400 p-2 m-1 rounded" data-bot="3">3</button>
+        </div>
+
+        <div class="flex justify-center mt-4">
+          <button id="start-game-btn" class="bg-green-500 text-white px-4 py-2 rounded">Start Game</button>
+        </div>
+      </div>
+
+      <div id="loading-screen" class="hidden flex items-center justify-center">
+        <h2 class="text-2xl">Loading...</h2>
+      </div>
+
+      <div id="game-screen" class="hidden flex-grow flex justify-center items-center p-4">
+        <canvas id="gameCanvas" class="border-4 border-black bg-green-50" width="800" height="800"></canvas>
+      </div>
+
+      <aside class="w-1/5 bg-white p-4 border-l border-gray-200">
+        <h2 class="font-bold text-lg">Actions</h2>
+        <div id="actions">
+          <button id="roll-dice-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Roll Dice</button>
+          <button id="buy-property-btn" class="bg-green-500 text-white px-4 py-2 rounded mt-2">Buy Property</button>
+          <button id="end-turn-btn" class="bg-gray-500 text-white px-4 py-2 rounded mt-2">End Turn</button>
+        </div>
+
+        <div class="mt-8">
+          <h2 class="font-bold text-lg">Game Log</h2>
+          <div id="game-log" class="overflow-y-auto h-40 bg-gray-100 p-2">
+            <!-- Log entries will appear here -->
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="bg-gray-800 p-4 text-white text-center">
+      &copy; 2024 Monopoly Game
+    </footer>
+  </div>
+
+  <script src="/js/game.js"></script>
+</body>
+</html>
