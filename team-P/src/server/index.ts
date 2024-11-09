@@ -5,6 +5,8 @@ import rootRoutes from "./routes/root";
 import httpErrors from "http-errors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import connectLiveReload from "connect-livereload";
+import livereload from "livereload";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,3 +32,16 @@ app.use((_request, _response, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+const staticPath = path.join(process.cwd(), "src", "public");
+app.use(express.static(staticPath));
+
+if (process.env.NODE_ENV === "development") {
+  const reloadServer = livereload.createServer();
+  reloadServer.watch(staticPath);
+  reloadServer.server.once("connection", () => {
+    setTimeout(() => {
+      reloadServer.refresh("/");
+}, 100); });
+  app.use(connectLiveReload());
+}
