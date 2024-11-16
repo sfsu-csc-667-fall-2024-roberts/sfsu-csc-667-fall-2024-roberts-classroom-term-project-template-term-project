@@ -7,6 +7,9 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import connectLiveReload from "connect-livereload";
 import livereload from "livereload";
+import * as configuration from "./config";
+import * as routes from "./routes";
+import * as middleware from "./middleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,7 +26,9 @@ app.set("views", path.join(process.cwd(), "src", "server", "views"));
 
 app.set("view engine", "ejs");
 
-app.use("/", rootRoutes);
+//app.use("/", rootRoutes);
+app.use("/",routes.root);
+app.use("/auth",routes.auth);
 
 app.use((_request, _response, next) => {
   next(httpErrors(404));
@@ -36,7 +41,10 @@ app.listen(PORT, () => {
 const staticPath = path.join(process.cwd(), "src", "public");
 app.use(express.static(staticPath));
 
-if (process.env.NODE_ENV === "development") {
+
+configuration.configureLiveReload(app, staticPath);
+configuration.configureSession(app);
+/*if (process.env.NODE_ENV === "development") {
   const reloadServer = livereload.createServer();
   reloadServer.watch(staticPath);
   reloadServer.server.once("connection", () => {
@@ -44,4 +52,4 @@ if (process.env.NODE_ENV === "development") {
       reloadServer.refresh("/");
 }, 100); });
   app.use(connectLiveReload());
-}
+}*/
